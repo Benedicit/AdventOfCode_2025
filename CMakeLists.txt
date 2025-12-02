@@ -4,9 +4,18 @@ project(AdventOfCode_2025)
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(.)
-
 add_executable(AdventOfCode_2025
         main.cpp
         main.h
         day1.cpp
-        day1.h)
+        day1.h
+        day2.h
+        day2.h
+        day2.h
+        day2.h
+        day1.cpp)
+target_compile_options(AdventOfCode_2025 PRIVATE
+        -O3
+
+)
+
