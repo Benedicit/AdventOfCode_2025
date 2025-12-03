@@ -10,9 +10,11 @@
 
 #include "day1.h"
 #include "day2.h"
+#include "day3.h"
 
 int main() {
-	day2::part1();
-	day2::part2();
+	//day3::part1();
+	day3::part1_2(2);
+	day3::part1_2(12);
 
 }

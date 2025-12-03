@@ -11,6 +11,7 @@
 #include <iostream>
 #include <set>
 #include <sstream>
+#include <ctime>
 
 class day2 {
 public:
@@ -60,7 +61,9 @@ public:
 		std::ifstream input("../inputs/day2.txt");
 		std::string line{};
 		unsigned long long result = 0;
+		auto start_time = clock();
 		while (input >> line) {
+
 			std::stringstream s {line};
 			std::string current_range{};
 			while (std::getline(s, current_range, ',')) {
@@ -108,7 +111,10 @@ public:
 
 			}
 		}
+		auto end_time = clock();
 		std::cout << result << "\n";
+		std::cout << static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC << "\n";
+
 
 	}
 
