@@ -11,7 +11,6 @@
 #include <iostream>
 #include <set>
 #include <sstream>
-#include <ctime>
 
 class day2 {
 public:
@@ -61,7 +60,7 @@ public:
 		std::ifstream input("../inputs/day2.txt");
 		std::string line{};
 		unsigned long long result = 0;
-		auto start_time = clock();
+		auto start_time = std::chrono::high_resolution_clock::now();
 		while (input >> line) {
 
 			std::stringstream s {line};
@@ -111,9 +110,9 @@ public:
 
 			}
 		}
-		auto end_time = clock();
-		std::cout << result << "\n";
-		std::cout << static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC << "\n";
+		auto end_time = std::chrono::high_resolution_clock::now();
+		std::cout << "Day 2 part 2: " << result << "; ";
+		std::cout << "Runtime: " << (std::chrono::duration_cast<std::chrono::milliseconds>((end_time - start_time))).count() << "ms \n";
 
 
 	}
