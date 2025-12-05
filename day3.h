@@ -25,7 +25,7 @@ class day3 {
 			for (int i = digits_battery - 1; i >= 0; i--) {
 				int highest_digit{};
 				for (int j = idx_last_digit + 1; j < line.size() - i; ++j) {
-					int current_digit = line[j] - '0';
+					const int current_digit = line[j] - '0';
 					if (current_digit > highest_digit) {
 						highest_digit = current_digit;
 						idx_last_digit = j;

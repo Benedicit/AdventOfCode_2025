@@ -12,10 +12,11 @@
 #include "day2.h"
 #include "day3.h"
 #include "day4.h"
+#include "day5.h"
 
 int main() {
-	auto day = day4();
-	day.part1(true);
+	auto day = day5();
+	day.part1();
 	day.part2();
 
 }
