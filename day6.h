@@ -86,13 +86,14 @@ class day6 {
 
 	}
 	void part2() {
+		const auto start_time = std::chrono::high_resolution_clock::now();
 		uint64_t result{};
 		for (int i = 0; i < operators.size(); ++i) {
 			uint64_t temp = -1;
 			for (int j = 0; j < all_columns_numbers[0][i].size(); ++j) {
 				int k = 0;
 
-				// k is the row, i the column and j where we are in the current column
+				// k is the row, i the column and j where we are in the i-th column
 				while (all_columns_numbers[k][i][j] == ' ') {
 					k++;
 				}
@@ -119,7 +120,13 @@ class day6 {
 			}
 			result += temp;
 		}
+
+		const auto end_time = std::chrono::high_resolution_clock::now();
+
 		std::cout << result << "\n";
+		std::cout << "Runtime: " << (std::chrono::duration_cast<std::chrono::microseconds>((end_time - start_time))).
+				count() << "us \n";
+
 	}
 };
 
