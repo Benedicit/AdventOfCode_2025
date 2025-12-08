@@ -9,7 +9,6 @@
 #include <string>
 #include <iostream>
 #include <stack>
-#include <set>
 #include <vector>
 #include <unordered_map>
 
@@ -65,12 +64,19 @@ public:
 	}
 	void part2() {
 
-		const auto current_x    = static_cast<int32_t>(start);
-		const int32_t current_y = 1;
-		long result       = 0;
+		const auto start_time = std::chrono::high_resolution_clock::now();
+		const auto current_x        = static_cast<int32_t>(start);
+		constexpr int32_t current_y = 1;
+		long result                 = 0;
 		std::unordered_map<uint64_t, long> cache;
 		result = part2_cached(cache, current_x, current_y);
+
+		const auto end_time = std::chrono::high_resolution_clock::now();
+
 		std::cout << result << "\n";
+		std::cout << "Runtime: " << (std::chrono::duration_cast<std::chrono::microseconds>((end_time - start_time))).
+				count() << "us \n";
+
 	}
 
 	long part2_cached(auto& cache, const int32_t current_x, int32_t current_y) {
