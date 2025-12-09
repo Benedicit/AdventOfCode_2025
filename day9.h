@@ -16,13 +16,17 @@ typedef std::pair<int64_t, int64_t> cord_2D;
 
 class day9 {
 	std::vector<cord_2D> points;
-	std::vector<cord_2D> convex_hull;
-	double dist2(const cord_2D& a, const cord_2D& b) {
-		return (a.first - b.first) * (a.first - b.first) + (a.second - b.second) * (a.second - b.second);
-	}
+	std::vector<cord_2D> points_sorted;
+	std::vector<cord_2D> points_sorted_rev;
+	struct cmp {
+		bool operator()(const cord_2D& a,
+		 const cord_2D& b) const {
 
-
-
+			if (a.first == b.first)
+				return a.second < b.second;
+			return a.first < b.first;
+		}
+	};
 public:
 	day9() {
 		int64_t x{};
@@ -33,6 +37,10 @@ public:
 			points.emplace_back(x, y);
 		}
 		// Luckily the points are already sorted in clockwise manner
+		points_sorted = points;
+		std::ranges::sort(points_sorted, cmp());
+		points_sorted_rev = points_sorted;
+		std::ranges::reverse(points_sorted_rev);
 	}
 	static int64_t cross(const cord_2D &A, const cord_2D& B, const cord_2D& C) {
 		return (B.first - A.first) * (C.second - A.second) - (B.second - A.second) * (C.first - A.first);
@@ -46,7 +54,7 @@ public:
 		return false;
 	}
 
-	// Using raycast algorithm
+	// Using ray-cast algorithm
 	bool check_if_point_in_hull(const cord_2D &pt) {
 		const std::int64_t px = pt.first;
 		const std::int64_t py = pt.second;
@@ -111,10 +119,11 @@ public:
 		return true;
 	}
 	void part2() {
+		const auto start_time = std::chrono::high_resolution_clock::now();
 		int64_t max_distance = std::numeric_limits<int64_t>::min();
 		std::pair<int64_t, int64_t> edges{};
-		for (const auto& point: points) {
-			for (const auto& other_point: points) {
+		for (const auto& point: points_sorted) {
+			for (const auto& other_point: points_sorted_rev) {
 				if (point == other_point) {
 					continue;
 				}
@@ -128,9 +137,7 @@ public:
 				// For now just check if the edge points are inside the polygon and only then check the edges to speed up significantly (but is still slow)
 				if (current_distance > max_distance && check_if_point_in_hull({point.first, other_point.second}) && check_if_point_in_hull({other_point.first, point.second})) {
 
-					bool rect_in_polygon = check_edge_x_in_polygon(smaller_x, bigger_x, smaller_y);
-					rect_in_polygon &= check_edge_x_in_polygon(smaller_x, bigger_x, bigger_y);
-					rect_in_polygon &= check_edge_y_in_polygon(smaller_y, bigger_y, smaller_x);
+					bool rect_in_polygon = check_edge_y_in_polygon(smaller_y, bigger_y, smaller_x);
 					rect_in_polygon &= check_edge_y_in_polygon(smaller_y, bigger_y, bigger_x);
 					if (rect_in_polygon) {
 						max_distance = current_distance;
@@ -140,8 +147,11 @@ public:
 			}
 		}
 		const uint64_t result = edges.first * edges.second;
+		const auto end_time = std::chrono::high_resolution_clock::now();
 		std::cout << result << "\n";
 
+		std::cout << "Runtime: " << (std::chrono::duration_cast<std::chrono::milliseconds>((end_time - start_time))).
+				count() << "ms \n";
 	}
 
 };
