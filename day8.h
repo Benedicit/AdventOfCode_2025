@@ -76,11 +76,12 @@ public:
 	void part1() {
 		int i{};
 		std::pair<cord,cord> last{};
+
 		while (junctions.size() > 1) {
 			if (i==1000) {
 				// Part 1
 				std::ranges::sort(junctions, [](const auto& a, const auto& b) {return a.size() > b.size();});
-				uint64_t result = junctions[0].size() * junctions[1].size() * junctions[2].size();
+				const uint64_t result = junctions[0].size() * junctions[1].size() * junctions[2].size();
 				std::cout << result << "\n";
 			}
 			last = pairs[i];
@@ -109,6 +110,7 @@ public:
 			junctions.erase(std::ranges::find(junctions, merged));
 			i++;
 		}
+		// Part 2
 		std::cout << std::get<0>(last.first) * std::get<0>(last.second) << "\n";
 
 	}

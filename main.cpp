@@ -16,9 +16,10 @@
 #include "day6.h"
 #include "day7.h"
 #include "day8.h"
+#include "day9.h"
 
 int main() {
-	auto day = day8();
+	auto day = day9();
 	day.part1();
 	day.part2();
 
