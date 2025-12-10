@@ -37,6 +37,7 @@ public:
 			points.emplace_back(x, y);
 		}
 		// Luckily the points are already sorted in clockwise manner
+		// But to slightly speed it up we check the points that are farthest away
 		points_sorted = points;
 		std::ranges::sort(points_sorted, cmp());
 		points_sorted_rev = points_sorted;
@@ -142,6 +143,7 @@ public:
 					if (rect_in_polygon) {
 						max_distance = current_distance;
 						edges = {dist_x, dist_y};
+						break;
 					}
 				}
 			}
