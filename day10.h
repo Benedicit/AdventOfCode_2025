@@ -72,6 +72,8 @@ public:
 			}
 		}
 	void part1() {
+		// For some reason I always end up with DFS. Because normal DFS is too slow, I did DFS with depth limiting
+		// BFS would do it much simpler and faster
 		const auto start_time = std::chrono::high_resolution_clock::now();
 		uint64_t result{};
 		for (int i = 0; i < targets.size(); i++) {
@@ -162,33 +164,12 @@ public:
 		}
 	};
 	void part2() {
-		// Still not finished
+		// Z3 does the job, but I sadly cannot think of a solution which can scale to the real input
 		uint64_t result{};
 		for (int i = 0; i < switches.size(); ++i) {
 			auto curr_switches = switches[i];
 			auto ratings = joltage_requirements[i];
-			std::ranges::sort(curr_switches, cmp());
-			for (auto& s: curr_switches) {
-				std::bitset<10> bs(s);
-				std::vector<uint8_t> indices;
-				for (int j = 0; j < 10; ++j) {
-					if (bs[j]) {
-						indices.emplace_back(j);
-					}
-				}
-				uint16_t smallest_rating = -1;
-				for (auto& idx: indices) {
-					if (ratings[idx] < smallest_rating) {
-						smallest_rating = ratings[idx];
-					}
-				}
-				for (int j = 0; j < smallest_rating; ++j) {
-					for (auto& idx: indices) {
-						ratings[idx]--;
-					}
-				}
-				result += smallest_rating;
-			}
+
 		}
 		std::cout << result << "\n";
 	}

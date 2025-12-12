@@ -30,7 +30,9 @@ add_executable(AdventOfCode_2025
         day9.cpp
         day9.h
         day10.cpp
-        day10.h)
+        day10.h
+        day11.cpp
+        day11.h)
 target_compile_options(AdventOfCode_2025 PRIVATE
         -O3
 
